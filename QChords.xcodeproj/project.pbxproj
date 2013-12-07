@@ -23,6 +23,8 @@
 		9FB0C7D41853C24F0099DBC7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB0C7B01853C24E0099DBC7 /* UIKit.framework */; };
 		9FB0C7DC1853C24F0099DBC7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9FB0C7DA1853C24F0099DBC7 /* InfoPlist.strings */; };
 		9FB0C7DE1853C24F0099DBC7 /* QChordsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0C7DD1853C24F0099DBC7 /* QChordsTests.m */; };
+		9FB0C7EB1853C3310099DBC7 /* song.json in Resources */ = {isa = PBXBuildFile; fileRef = 9FB0C7EA1853C3310099DBC7 /* song.json */; };
+		9FB0C7EE1853C7E50099DBC7 /* ChordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0C7ED1853C7E50099DBC7 /* ChordCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,9 @@
 		9FB0C7D91853C24F0099DBC7 /* QChordsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QChordsTests-Info.plist"; sourceTree = "<group>"; };
 		9FB0C7DB1853C24F0099DBC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9FB0C7DD1853C24F0099DBC7 /* QChordsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QChordsTests.m; sourceTree = "<group>"; };
+		9FB0C7EA1853C3310099DBC7 /* song.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = song.json; sourceTree = "<group>"; };
+		9FB0C7EC1853C7E50099DBC7 /* ChordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChordCell.h; sourceTree = "<group>"; };
+		9FB0C7ED1853C7E50099DBC7 /* ChordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChordCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,12 +124,10 @@
 			children = (
 				9FB0C7BB1853C24E0099DBC7 /* AppDelegate.h */,
 				9FB0C7BC1853C24E0099DBC7 /* AppDelegate.m */,
-				9FB0C7BE1853C24E0099DBC7 /* Main_iPhone.storyboard */,
-				9FB0C7C11853C24E0099DBC7 /* Main_iPad.storyboard */,
-				9FB0C7C41853C24E0099DBC7 /* MasterViewController.h */,
-				9FB0C7C51853C24E0099DBC7 /* MasterViewController.m */,
-				9FB0C7C71853C24E0099DBC7 /* DetailViewController.h */,
-				9FB0C7C81853C24E0099DBC7 /* DetailViewController.m */,
+				9FB0C7F21853D2CC0099DBC7 /* StoryBoard */,
+				9FB0C7F01853D2A50099DBC7 /* SongListView */,
+				9FB0C7F11853D2B60099DBC7 /* DetailView */,
+				9FB0C7EF1853D27B0099DBC7 /* Resouces */,
 				9FB0C7CA1853C24E0099DBC7 /* Images.xcassets */,
 				9FB0C7B31853C24E0099DBC7 /* Supporting Files */,
 			);
@@ -158,6 +161,51 @@
 				9FB0C7DA1853C24F0099DBC7 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9FB0C7EF1853D27B0099DBC7 /* Resouces */ = {
+			isa = PBXGroup;
+			children = (
+				9FB0C7EA1853C3310099DBC7 /* song.json */,
+			);
+			name = Resouces;
+			sourceTree = "<group>";
+		};
+		9FB0C7F01853D2A50099DBC7 /* SongListView */ = {
+			isa = PBXGroup;
+			children = (
+				9FB0C7F31853D2DB0099DBC7 /* ChordCell */,
+				9FB0C7C41853C24E0099DBC7 /* MasterViewController.h */,
+				9FB0C7C51853C24E0099DBC7 /* MasterViewController.m */,
+			);
+			name = SongListView;
+			sourceTree = "<group>";
+		};
+		9FB0C7F11853D2B60099DBC7 /* DetailView */ = {
+			isa = PBXGroup;
+			children = (
+				9FB0C7C71853C24E0099DBC7 /* DetailViewController.h */,
+				9FB0C7C81853C24E0099DBC7 /* DetailViewController.m */,
+			);
+			name = DetailView;
+			sourceTree = "<group>";
+		};
+		9FB0C7F21853D2CC0099DBC7 /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				9FB0C7BE1853C24E0099DBC7 /* Main_iPhone.storyboard */,
+				9FB0C7C11853C24E0099DBC7 /* Main_iPad.storyboard */,
+			);
+			name = StoryBoard;
+			sourceTree = "<group>";
+		};
+		9FB0C7F31853D2DB0099DBC7 /* ChordCell */ = {
+			isa = PBXGroup;
+			children = (
+				9FB0C7EC1853C7E50099DBC7 /* ChordCell.h */,
+				9FB0C7ED1853C7E50099DBC7 /* ChordCell.m */,
+			);
+			name = ChordCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,6 +284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FB0C7EB1853C3310099DBC7 /* song.json in Resources */,
 				9FB0C7C31853C24E0099DBC7 /* Main_iPad.storyboard in Resources */,
 				9FB0C7CB1853C24E0099DBC7 /* Images.xcassets in Resources */,
 				9FB0C7C01853C24E0099DBC7 /* Main_iPhone.storyboard in Resources */,
@@ -261,6 +310,7 @@
 				9FB0C7BD1853C24E0099DBC7 /* AppDelegate.m in Sources */,
 				9FB0C7C61853C24E0099DBC7 /* MasterViewController.m in Sources */,
 				9FB0C7B91853C24E0099DBC7 /* main.m in Sources */,
+				9FB0C7EE1853C7E50099DBC7 /* ChordCell.m in Sources */,
 				9FB0C7C91853C24E0099DBC7 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

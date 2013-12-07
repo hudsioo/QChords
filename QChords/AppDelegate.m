@@ -10,6 +10,15 @@
 
 @implementation AppDelegate
 
+
+- (void)setUpdata{
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"song" ofType:@"json"];
+    NSData * dataJ = [NSData dataWithContentsOfFile:filePath];
+    NSMutableArray *arrayAll = [NSJSONSerialization JSONObjectWithData:dataJ options:NSJSONReadingMutableContainers error:nil];
+    self.allArray = arrayAll;
+    NSLog(@"1 count %d",self.allArray.count);
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
@@ -18,6 +27,9 @@
         UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
         splitViewController.delegate = (id)navigationController.topViewController;
     }
+    
+    self.allArray = [[NSMutableArray alloc]init];
+    [self setUpdata];
     return YES;
 }
 							

@@ -19,8 +19,8 @@
 
 - (void)setDetailItem:(id)newDetailItem
 {
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
+    if (_songDic != newDetailItem) {
+        _songDic = newDetailItem;
         
         // Update the view.
         [self configureView];
@@ -35,15 +35,20 @@
 {
     // Update the user interface for the detail item.
 
-    if (self.detailItem) {
-        self.detailDescriptionLabel.text = [self.detailItem description];
+    if (self.songDic) {
+        NSString * strURL = [NSString stringWithFormat:@"http://chordtabs.in.th%@&chord=yes",self.songDic[@"link1"]];
+        NSURL *url = [NSURL URLWithString:strURL];
+        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+        [self.webView loadRequest:requestObj];
+        self.title = [NSString stringWithFormat:@"%@ - %@",self.songDic[@"song"],self.songDic[@"artis"]];
+        NSLog(@"web");
     }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	self.title = @"QChords";
     [self configureView];
 }
 
@@ -57,7 +62,7 @@
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
-    barButtonItem.title = NSLocalizedString(@"Master", @"Master");
+    barButtonItem.title = NSLocalizedString(@"Chords", @"Chords");
     [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
     self.masterPopoverController = popoverController;
 }
