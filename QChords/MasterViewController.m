@@ -29,7 +29,7 @@
 - (void)awakeFromNib
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        self.clearsSelectionOnViewWillAppear = NO;
+       // self.clearsSelectionOnViewWillAppear = NO;
         self.preferredContentSize = CGSizeMake(320.0, 600.0);
     }
     [super awakeFromNib];
@@ -43,14 +43,57 @@
     self.allArray = [[NSMutableArray alloc]initWithArray:[self appDelegate].allArray];
     self.itemInTable = [[NSMutableArray alloc]initWithArray:self.allArray];
    
-    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(60, 0, 260, 44)];
     self.searchBar.delegate = self;
     self.searchBar.placeholder = @"ชื่อเพลง ศิลปิน อัลบัม";
     [self.navigationController.navigationBar addSubview:self.searchBar];
     
+    UIBarButtonItem * scopeBtn = [[UIBarButtonItem alloc]initWithTitle:@"Sort"
+                                                        style:UIBarButtonItemStylePlain
+                                                        target:self
+                                                        action:@selector(scopeActionShow)];
+    self.navigationItem.leftBarButtonItem = scopeBtn;
+    
+    isScope = NO;
+    self.sortSegment.hidden = YES;
     
     [self.tableView reloadData];
 }
+
+- (void)scopeActionShow{
+    if (!isScope) {
+        [self moveView:self.tableView duration:0.3 curve:UIViewAnimationCurveLinear x:0 y:+45];
+        [self moveView:self.scopeBGView duration:0.3 curve:UIViewAnimationCurveLinear x:0 y:+45];
+        isScope = YES;
+        self.sortSegment.hidden = NO;
+    }else{
+        [self moveView:self.tableView duration:0.3 curve:UIViewAnimationCurveLinear x:0 y:0];
+        [self moveView:self.scopeBGView duration:0.3 curve:UIViewAnimationCurveLinear x:0 y:-45];
+        isScope = NO;
+        self.sortSegment.hidden = YES;
+    }
+}
+
+- (IBAction)sortSMToggle:(id)sender {
+    UISegmentedControl * segObj = (UISegmentedControl*)sender;
+    NSString * keyWord;
+    if (segObj.selectedSegmentIndex == 0) keyWord = @"artis";
+    else if (segObj.selectedSegmentIndex == 1) keyWord = @"allbum";
+    else if (segObj.selectedSegmentIndex == 2) keyWord = @"song";
+    else if (segObj.selectedSegmentIndex == 3) keyWord = @"none";
+        
+    if ([keyWord isEqualToString:@"none"]) {
+        self.itemInTable = [self.allArray mutableCopy];
+        [self.tableView reloadData];
+    }else{
+        NSSortDescriptor * aSortDescriptor = [[NSSortDescriptor alloc] initWithKey:keyWord ascending:YES];
+        [self.itemInTable sortUsingDescriptors:[NSArray arrayWithObject:aSortDescriptor]];
+        [self.tableView reloadData];
+    }
+   
+}
+
+#pragma mark - SearchBar Delegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
     [self.searchBar resignFirstResponder];
@@ -63,16 +106,11 @@
 - (void)searchBar:(UISearchBar *)theSearchBar textDidChange:(NSString *)searchText {
     
     if([searchText length] > 0) {
-        NSPredicate *pred;
-        
-        pred = [NSPredicate predicateWithFormat:@"artis contains[cd] %@ || song contains[cd] %@ || allbum contains[cd] %@", searchText, searchText,searchText];
-        
+        NSPredicate * pred = [NSPredicate predicateWithFormat:@"artis contains[cd] %@ || song contains[cd] %@ || allbum contains[cd] %@", searchText, searchText,searchText];
         NSMutableArray *filtered = [[NSMutableArray alloc] initWithArray:[self.allArray filteredArrayUsingPredicate:pred]];
         self.itemInTable = filtered;
-        
     }
     else {
-        
         self.itemInTable = self.allArray;
     }
     [self.tableView reloadData];
@@ -103,7 +141,12 @@
     ChordCell *cell = (ChordCell*)[tableView dequeueReusableCellWithIdentifier:@"ChordCell" forIndexPath:indexPath];
 
     cell.songLB.text = self.itemInTable[indexPath.row][@"song"];
-    cell.artisLB.text = [NSString stringWithFormat:@"%@",self.itemInTable[indexPath.row][@"artis"]];
+    if ([self.itemInTable[indexPath.row][@"allbum"] isEqualToString:@""]) {
+        cell.artisLB.text = [NSString stringWithFormat:@"%@",self.itemInTable[indexPath.row][@"artis"]];
+    }else{
+        cell.artisLB.text = [NSString stringWithFormat:@"%@ (%@)",self.itemInTable[indexPath.row][@"artis"],self.itemInTable[indexPath.row][@"allbum"]];
+    }
+    
 
     return cell;
 }
@@ -129,10 +172,30 @@
 }
 
 
+- (void)moveView:(UIView *)view duration:(NSTimeInterval)duration
+           curve:(int)curve x:(CGFloat)x y:(CGFloat)y
+{
+    // Setup the animation
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationCurve:curve];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    // The transform matrix
+    CGAffineTransform transform = CGAffineTransformMakeTranslation(x, y);
+    view.transform = transform;
+    
+    // Commit the changes
+    [UIView commitAnimations];
+    
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end

@@ -10,8 +10,14 @@
 
 @class DetailViewController;
 
-@interface MasterViewController : UITableViewController<UISearchBarDelegate>
+@interface MasterViewController : UIViewController<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate>{
+    BOOL isScope;
+}
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
 
+@property (weak, nonatomic) IBOutlet UIView *scopeBGView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *sortSegment;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+- (IBAction)sortSMToggle:(id)sender;
 @end
